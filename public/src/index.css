@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body{
+  font-family: "Protest Revolution", sans-serif;
+  font-weight: 300;
+  max-height: 100vh;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+
+body,button,input{
+  color: white;
+  font-family: "Protest Revolution", sans-serif;
+  font-weight: 200;
+
+
+}
