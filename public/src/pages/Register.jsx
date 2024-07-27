@@ -59,14 +59,14 @@ export default function Register() {
     const {password ,username , email } = value;
 
     if(username.length<3){
-      toast.error("USername must be > 3 characters",toastAppear);
+      toast.error("Username must be greater than 3 characters",toastAppear);
       return false;
     }else if(password.length < 8){
-      toast.error("Password must be > 8 characters",
+      toast.error("Password must be greater than 8 characters",
       toastAppear);
       return false;
     }else if(email === ""){
-      toast.error("Please enter valid ",
+      toast.error("Please enter valid email",
       toastAppear);
     }
 
