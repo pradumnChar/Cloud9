@@ -7,7 +7,7 @@ import { Link,useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loginRoute } from "../utils/APIRoutes";
-
+import game from "../assets/game.jpg";
 
 
 export default function Login() {
@@ -128,7 +128,9 @@ const FormContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color:#ECF0F1;
+  background-image: url('${game}');
+   background-repeat: no-repeat;
+
   .ok {
     padding: 50px;
     border-radius: 30px;
@@ -141,7 +143,11 @@ const FormContainer = styled.div`
       inset -4px -4px 5px 0 rgba(0, 0, 0, 0.185),
       0 0 10px 5px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(0.2px); */}
-    background-color: #1C2833;
+    backdrop-filter: blur(2px) saturate(96%);
+    -webkit-backdrop-filter: blur(2px) saturate(96%);
+    background-color: rgba(255, 255, 255, 0.18);
+    border-radius: 20px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
   }
   .myform {
     display: flex;
@@ -185,8 +191,9 @@ const FormContainer = styled.div`
   }
   input:focus {
     outline: none;
-    border: 2px inset white;
-    border-radius: 25px;
+    border: 2px solid transparent;
+    border-bottom: 2px solid black;
+   
   }
   button {
     color: grey;
