@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { Buffer } from "buffer";
+//import { Buffer } from "buffer";
 import loadingImage from "../assets/aww-cute.gif";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { setAvatarRoute } from "../utils/APIRoutes";
+import multiavatar from "@multiavatar/multiavatar/esm";
 
 export default function SetAvatar() {
-  const api = 'https://api.multiavatar.com/45678945';
+  // const api = 'https://api.multiavatar.com/45678945';
   const navigate = useNavigate();
   const [avatars , setAvatars] = useState([]);
-  const [isLoading , setisLoading]  = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [ selectedAvatar , setSelectedAvatar] = useState(undefined);
  
   const toastAppear = {
+    
     position: "bottom-right",
     theme: "dark",
     pauseOnHover: true,
@@ -81,21 +83,38 @@ export default function SetAvatar() {
   //   fetchData(); // Call the async function inside useEffect
   
   // }, []);
+  
+  // useEffect(() => {
+  //   (async () => {
+  //     const data = [];
+  //     for (let i = 0; i < 4; i++) {
+  //       const image = await axios.get(
+  //         `${api}/${Math.round(Math.random() * 1000)}`
+  //       );
+  //       const buffer = new Buffer(image.data);
+  //       data.push(buffer.toString("base64"));
+  //     }
+  //     setAvatars(data);
+  //     setisLoading(false);
+  //   })();
+  // }, [ ]);
+  const generateRandomName = () => Math.random().toString(36).substring(2, 10);
   useEffect(() => {
-    (async () => {
+    const generateAvatars = () => {
       const data = [];
       for (let i = 0; i < 4; i++) {
-        const image = await axios.get(
-          `${api}/${Math.round(Math.random() * 1000)}`
-        );
-        const buffer = new Buffer(image.data);
-        data.push(buffer.toString("base64"));
+        const randomName = generateRandomName();
+        const svgCode = multiavatar(randomName);
+        const encoded = btoa(unescape(encodeURIComponent(svgCode)));
+        data.push(encoded);
       }
       setAvatars(data);
-      setisLoading(false);
-    })();
-  }, [ ]);
+      setIsLoading(false);
+    };
 
+    generateAvatars();
+  }, []);
+  
 
    return (
     <>
@@ -112,15 +131,18 @@ export default function SetAvatar() {
                avatars.map((avatar,index)=>
                {
                 return (
-                    <div 
-                    key={index}
-                    className={`avatar 
-                    ${selectedAvatar === index ? "selected" : "" }` }>
-                       <img src={`data: image/svg+xml;base64,${avatar}`}
-                        alt="avatr" 
-                            onClick={() => setSelectedAvatar(index)}
-                        />
-                    </div>
+                  <div
+                key={index}
+                className={`avatar ${
+                  selectedAvatar === index ? "selected" : ""
+                }`}
+                onClick={() => setSelectedAvatar(index)}
+              >
+                <img
+                  src={`data:image/svg+xml;base64,${avatar}`}
+                  alt={`avatar-${index}`}
+                />
+              </div>
                 );
                
              }) }
@@ -128,7 +150,7 @@ export default function SetAvatar() {
         <button onClick={()=>setProfilePicture()}>SetProfile</button>
       </Container>
     }
-      ;
+      
       <ToastContainer />
     </>
   );
